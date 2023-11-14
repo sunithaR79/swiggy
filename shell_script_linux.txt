@@ -1,0 +1,58 @@
+#!/bin/bash
+# create keypair for the new aws EC2 instance
+
+echo "Enter the keypair name:"
+read keypair
+echo "Enter the region:"
+read region
+echo keypair="$name"
+echo region="$region"
+
+# creating keypair
+
+aws ec2 create-key-pair --key-name "$keypair" --output text > "$keypair".pem --region "$region"
+
+# changing the keypair file permission
+
+chmod 400 "$keypair".pem
+
+# Giving Instances details for the creation
+
+echo "Enter the instance Tagkey:"
+read key
+echo "Enter the instance Tagvalue:"
+read value
+echo "Enter the AMI Image_id:"
+read imageid
+echo "Enter the instance count:"
+read count
+echo "Enter the instance type:"
+read type1
+echo "Enter the security group:"
+read securityid
+echo "Enter the subnet_id:"
+read subnetid
+
+# details is given to create the ec2 instance
+
+echo imageid="$imageid"
+echo count="$count"
+echo instancetype="$type1"
+echo security="$securityid"
+echo subnetid="$subnetid"
+echo Tagkey="$key"
+echo Tagvalue="$value"
+
+# creating ec2 Instance command for instance creation
+
+aws ec2 run-instances --image-id "$imageid" --count "$count" --instance-type "$type1" --key-name "$keypair" --security-group-ids "$securityid" --subnet-id "$subnetid" --region "$region" --tag-specifications 'ResourceType=instance,Tags=[{Key='$key',Value='$value'}]'
+
+# details of the instance for which is go the output while creating
+
+instance_id=$(aws ec2 describe-instances --region "$region" --filters "Name=instance-state-name,Values=running" --query "Reservations[0].Instances[0].InstanceId" --output text)
+
+public_ip=$(aws ec2 describe-instances --region "$region" --instance-ids $instance_id --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
+
+# SSH into the instance using the private key file
+
+ssh -i "$keypair".pem ec2-user@$public_ip
