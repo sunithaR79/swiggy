@@ -1,0 +1,98 @@
+    1 git branch and git merge / rebase:
+ -----------------------------------------
+
+ * Creating branches and adding files in that branches.
+ * Merging branches files 
+    2   yum install git -y
+    3  mkdir swiggy
+    4  cd swiggy/
+    5  git branch
+    6  git init
+    7  git branch
+    8  touch master{1..2}
+    9  git add .
+   
+   11  git commit -m "commited master branch files"
+   12  git branch
+   13  ls
+   14  git checkout -b branch1
+   15  touch abc{1..3}
+   16  git add .
+   17  git commit -m "commited  branch1 files"
+   18  git checkout -b branch2
+   19  touch def{1..3}
+   20  ls
+   21  git add .
+   22  git commit -m "branch2- def files"
+   23  git checkout -b branch3
+   24  touch ghi{1..3}
+   25  git add .
+   26  git commit -m "branch3 - ghi files"
+   27  git branch
+   28  ls
+   29  git checkout branch2
+   30  ls
+   31  git checkout branch1
+   32  ls
+   33  git checkout master
+   34  ls
+     
+   36  git merge branch1
+   37  ls
+   38  git merge branch2
+   39  ls
+   40  git rebase branch3
+
+      git push:
+   -----------------
+git push: pushing the data from local to cetral repo (git hub)
+
+   41  git remote add origin https://github.com/sunithaR79/swiggy.git
+   42  git push origin master
+
+   43  git checkout branch1
+   44  git push origin branch1
+
+   45  git checkout branch2
+   46  git push origin branch2
+
+   47  git checkout branch3
+   48  git push origin branch3
+
+   49  git branch
+    
+    git merge and revert:
+   ------------------------
+  * git merge from local(server to central repo (github))
+
+   50  git checkout branch1
+   51  git merge branch2    (branch2 files merge with branch1 )
+   52  ls
+   53  git revert branch2   (branch2 files are UNmerge with branch1 )
+   54  ls
+ 
+ * git merge from Central to Local Repo
+   github=> pull request => new pull request => let side select Base: Branch1 ;
+                                                                compare: Branch2
+                                            => create pull request => commits: merging branch2 to branch1
+                                            => click on pull request => merge pull request => confirm merge
+
+    git clone:
+  ---------------
+
+git clone: pulling the data from cetral repo (git hub) to local.
+
+In git hub we can create the files and we will transfer the files from cetral repo (git hub) to local.
+
+
+   55  git branch
+   56  git checkout master
+   57  ls
+   58  git clone https://github.com/sunithaR79/swiggy.git
+   59  ll
+   60  git branch
+   61  ls
+   62  git pull origin master
+   63  l
+   64  ll
+   65  history
